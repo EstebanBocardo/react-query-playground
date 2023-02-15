@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Main from "./domains/Main";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+import {
+  BrowserRouter,
+  createBrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
+import SimpleQuery from "./domains/SimpleQuery";
+import PaginatedQuery from "./domains/PaginatedQuery";
+import InfiniteQuery from "./domains/InfiniteQuery";
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Main />} />
+          <Route path="simpleQuery" element={<SimpleQuery />} />
+          <Route path="paginatedQuery" element={<PaginatedQuery />} />
+          <Route path="infiniteQuery" element={<InfiniteQuery />} />
+        </Routes>
+      </BrowserRouter>
+
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 
